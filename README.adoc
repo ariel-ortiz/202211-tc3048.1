@@ -10,7 +10,7 @@ You can inspect the files directly through this site, or you can use `git` to ob
  
 2. Clone this repository. Type at the terminal:
     
-    git clone https://github.com/ariel-ortiz/202211-tc3048.1.git tc3048
+    git clone https://github.com/ariel-ortiz/202211-tc3048.2.git tc3048
     
  3. Change your current working directory to `tc3048`:
 
