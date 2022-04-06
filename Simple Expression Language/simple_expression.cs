@@ -100,40 +100,43 @@ public class Parser {
     }
 
     // (0)
-    public void Prog() {
-        Expr();
+    public int Prog() {
+        var result = Expr();
         Expect(TokenCategory.EOF);
+        return result;
     }
 
     // (1)
-    public void Expr() {
-        Term();
+    public int Expr() {
+        var result = Term();
         while (Current == TokenCategory.PLUS) {
             Expect(TokenCategory.PLUS);
-            Term();
+            result += Term();
         }
+        return result;
     }
 
     // (2)
-    public void Term() {
-        Fact();
+    public int Term() {
+        var result = Fact();
         while (Current == TokenCategory.TIMES) {
             Expect(TokenCategory.TIMES);
-            Fact();
+            result *= Fact();
         }
+        return result;
     }
 
     // (3)
-    public void Fact() {
+    public int Fact() {
         switch (Current) {
             case TokenCategory.INT:
-                Expect(TokenCategory.INT);
-                break;
+                var token = Expect(TokenCategory.INT);
+                return Int32.Parse(token.Lexeme);
             case TokenCategory.OPEN_PAR:
                 Expect(TokenCategory.OPEN_PAR);
-                Expr();
+                var result = Expr();
                 Expect(TokenCategory.CLOSE_PAR);
-                break;
+                return result;
             default:
                 throw new SyntaxError();
         }
@@ -146,8 +149,8 @@ public class Driver {
         var line = Console.ReadLine();
         var parser = new Parser(new Scanner(line).Scan().GetEnumerator());
         try {
-            parser.Prog();
-            Console.WriteLine("Good syntax!");
+            var result = parser.Prog();
+            Console.WriteLine(result);
         } catch (SyntaxError) {
             Console.WriteLine("Bad syntax!");
         }
