@@ -229,14 +229,42 @@ public class Times: Node {}
 public class Pow: Node {}
 public class Int: Node {}
 
+public class EvalVisitor {
+    public int Visit(Prog node) {
+        return Visit((dynamic) node[0]);
+    }
+
+    public int Visit(Plus node) {
+        return Visit((dynamic) node[0])
+            + Visit((dynamic) node[1]);
+    }
+
+    public int Visit(Times node) {
+        return Visit((dynamic) node[0])
+            * Visit((dynamic) node[1]);
+    }
+
+    public int Visit(Pow node) {
+        return (int) Math.Pow(Visit((dynamic) node[0]),
+                              Visit((dynamic) node[1]));
+
+        ;
+    }
+
+    public int Visit(Int node) {
+        return Int32.Parse(node.AnchorToken.Lexeme);
+    }
+}
+
 public class Driver {
     public static void Main() {
         Console.Write("> ");
         var line = Console.ReadLine();
         var parser = new Parser(new Scanner(line).Scan().GetEnumerator());
         try {
-            var result = parser.Prog();
-            Console.WriteLine(result.ToStringTree());
+            var ast = parser.Prog();
+            // Console.WriteLine(result.ToStringTree());
+            Console.WriteLine(new EvalVisitor().Visit((dynamic) ast));
         } catch (SyntaxError) {
             Console.WriteLine("Bad syntax!");
         }
