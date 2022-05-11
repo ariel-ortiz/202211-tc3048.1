@@ -256,6 +256,38 @@ public class EvalVisitor {
     }
 }
 
+public class SemanticError: Exception {}
+
+public class SemanticVisitor {
+
+    public void Visit(Prog node) {
+        Visit((dynamic) node[0]);
+    }
+
+    public void Visit(Plus node) {
+        Visit((dynamic) node[0]);
+        Visit((dynamic) node[1]);
+    }
+
+    public void Visit(Times node) {
+        Visit((dynamic) node[0]);
+        Visit((dynamic) node[1]);
+    }
+
+    public void Visit(Pow node) {
+        Visit((dynamic) node[0]);
+        Visit((dynamic) node[1]);
+    }
+
+    public void Visit(Int node) {
+        int result;
+        if (!Int32.TryParse(node.AnchorToken.Lexeme, out result)) {
+            throw new SemanticError();
+        }
+    }
+
+}
+
 public class Driver {
     public static void Main() {
         Console.Write("> ");
@@ -264,9 +296,12 @@ public class Driver {
         try {
             var ast = parser.Prog();
             // Console.WriteLine(result.ToStringTree());
+            new SemanticVisitor().Visit((dynamic) ast);
             Console.WriteLine(new EvalVisitor().Visit((dynamic) ast));
         } catch (SyntaxError) {
             Console.WriteLine("Bad syntax!");
+        } catch (SemanticError) {
+            Console.WriteLine("Bad semantics!");
         }
     }
 }
