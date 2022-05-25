@@ -21,7 +21,7 @@ Go to the [Python website](https://www.python.org/downloads/) if you don’t hav
 
 ## Wasmer
 
-**NOTE:** The current version of this software only works on x86-64 CPUs. At this moment, unfortunately, Apple M1 processors (ARM64) on macOS are not supported.
+**NOTE:** The current version of this software only works on x86-64 processors. At this moment, unfortunately, Apple M1 processors (ARM64) on macOS are not supported.
 
 The [Wasmer Python package](https://github.com/wasmerio/wasmer-python) brings the required API to execute WebAssembly modules from within a Python runtime system.
 
@@ -29,7 +29,7 @@ To install Wasmer, type at the terminal the following command:
 
     pip install wasmer wasmer_compiler_cranelift
 
-**NOTE:** If in the previous section you had to use the `python3` command, then you should use `pip3` here as well. Also, you might need run these commands with admin privileges (for example, prepending `sudo` to the command).
+**NOTE:** If in the previous section you had to use the `python3` command, then you should use `pip3` here as well. Also, you might need run this command with admin privileges (for example, prepending `sudo` to the command).
 
 ## How to Run
 
