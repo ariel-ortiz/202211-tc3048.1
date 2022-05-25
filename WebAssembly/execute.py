@@ -24,5 +24,7 @@ def main():
 
     # Run exported function, print result
     print(instance.exports.duplicate(21))
+    print(instance.exports.inc(10.5))
+    print(instance.exports.chicharronera(2.0, 4.0, 2.0))
 
 main()
